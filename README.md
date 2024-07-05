@@ -1,6 +1,6 @@
 # Create New Repository GitHub Action
 
-This GitHub Action automates the process of creating a new repository within the user's GitHub account. It allows you to specify the repository name and whether the repository should be private or public.
+This GitHub Action automates the process of creating a new repository within the user's GitHub account. It allows you to specify the repository name, privacy setting, and Personal Access Token (PAT) for authentication.
 
 ## Inputs
 
@@ -12,14 +12,9 @@ The name of the new repository to be created.
 
 Defines if the new repository should be private (`true`) or public (`false`).
 
-## Secrets
+### `personal_access_token` (required)
 
-### `PERSONAL_ACCESS_TOKEN` (required)
-
-GitHub Personal Access Token with the following scopes:
-- `repo`: Required to create repositories.
-
-Make sure to create a Personal Access Token with the `repo` scope enabled and store it as a secret in your repository.
+GitHub Personal Access Token with the necessary scopes to create repositories. This should be kept secure and not hard-coded directly in workflows.
 
 ## Outputs
 
@@ -44,12 +39,13 @@ jobs:
 
       - name: Create new repository
         id: create_repo
-        uses: dieguezthiago/create-repo-action@v1
+        uses: ThiagoDieguez/create-repo-action@v1
         with:
           repo_name: 'new-repo'
           is_private: 'true'
+          personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         env:
-          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get the URL of the newly created repository
         run: echo "Repository URL: ${{ steps.create_repo.outputs.repo_url }}"

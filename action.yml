@@ -18,7 +18,7 @@ inputs:
 
 runs:
   using: "docker"
-  image: "Dockerfile"
+  image: "create-repo/Dockerfile"
   args:
     - ${{ inputs.repo_name }}
     - ${{ inputs.is_private }}
