@@ -1,0 +1,30 @@
+name: 'Create new repository'
+description: 'Create a new repository within the users account'
+author: 'Thiago Dieguez'
+inputs:
+  repo_name:
+    description: 'The name of the new repository'
+    required: true
+  is_private:
+    description: 'Define if the new repository should be private'
+    required: true
+    default: 'false'
+    options:
+      - 'true'
+      - 'false'
+secrets:
+  PERSONAL_ACCESS_TOKEN:
+    description: 'GitHub Personal Access Token'
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.repo_name }}
+    - ${{ inputs.is_private }}
+    - ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+outputs:
+  repo_url:
+    description: 'The URL of the newly created repository'
