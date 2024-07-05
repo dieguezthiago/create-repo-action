@@ -18,5 +18,5 @@ repo_url=$(echo $response | jq -r '.html_url')
 
 echo $repo_url
 
-echo "::set-output name=repo_url::$repo_url"
-#echo "repo_url=$repo_url" >> $GITHUB_OUTPUT
+#echo "::set-output name=repo_url::$repo_url"
+echo "repo_url=$repo_url" >> $GITHUB_OUTPUT
